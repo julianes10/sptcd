@@ -1,0 +1,61 @@
+BOARD_TAG    = nano
+MCU = atmega328p
+
+ARDUINO_PORT = /dev/ttyUSB0
+ARDUINO_LIBS = SimpleTimer U8g2_Arduino SPI Wire RTClib FastLed lsem
+
+USER_LIB_PATH = $(realpath ../SCS/arduino)
+
+AVRDUDE_ARD_BAUDRATE = 115200
+
+ARDUINO_DIR=/home/jes/arduino-1.8.13
+ARDMK_DIR=/usr/share/arduino
+
+
+#Cheatsheet 
+#CPPFLAGS -c pre procesor-, should be on for any compilation C or C++. Not for linking
+#CXXFLAGS compiling and linking c++
+#CFLAGS   compiling and linking c
+#Some flags: -Os optimized in size, setup by default 
+#Some flags: -O3 optimized in speed (others 1,2 available also)
+
+############## CONDITIONAL COMPILATION
+# As the code and ram is at limit of nano, i must play with ugly ifdefs...
+# SPTCD_ENABLE_LSLIB
+# SPTCD_ENABLE_EXTRAMUSIC
+# SPTCD_ENABLE_DISPLAY
+# SPTCD_ENABLE_RTTTL
+# SPTCD_ENABLE_RTC
+# SPTCD_ENABLE_HCSR04
+# SPTCD_ENABLE_DHT
+# SPTCD_ENABLE_ALARM
+
+# SPTCD_DEBUG_LOOP
+# SPTCD_DEBUG_STATES
+# SPTCD_DEBUG_HCSR04_MEDIAN
+# SPTCD_DEBUG_RTC
+# SPTCD_DEBUG_DHT
+# SPTCD_DEBUG_HCSR04
+# SPTCD_DEBUG_LS
+# SPTCD_DEBUG_STILLALIVE
+
+# HCSR04_ENABLE_MEDIANFILTER --->dangerous even with 77% ram may cause problems!
+# SIMPLETIMER_ENABLE_10/5/...1 
+# DHTSENSOR_ENABLE_LOWCOST22
+# NONBLOCKINGRTTTL_ENABLE_MINBUFFER
+# NONBLOCKINGRTTTL_ENABLE_NOTES_FLASH
+# LSEM_ENABLE_PROTOCOL_LIGHT
+# LSEM_ENABLE_PROTOCOL
+# LSEM_DEBUG
+# STRINGQUEUE_ENABLE_3/10/1
+# RTTTLTRACKERLIST_ENABLE_RANDOM
+############## 
+CPPFLAGS+= -DSPTCD_ENABLE_LSLIB -DSPTCD_ENABLE_RTC -DSPTCD_ENABLE_DISPLAY 
+#CPPFLAGS+=  -DSPTCD_DEBUG_COLOR -DSPTCD_DEBUG_STATES #-DSPTCD_DEBUG_LOOP #-DSPTCD_DEBUG_HCSR04   #-DSPTCD_DEBUG_STILLALIVE  #
+CPPFLAGS+= -DSIMPLETIMER_ENABLE_5  
+
+
+include $(ARDMK_DIR)/Arduino.mk
+
+
+
